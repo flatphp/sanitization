@@ -1,0 +1,20 @@
+{
+    "name": "flatphp/sanitization",
+    "description": "light sanitizer",
+    "keywords": ["sanitizer", "sanitization"],
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Fred Yang",
+            "email": "shuky2000@163.com"
+        }
+    ],
+    "require": {
+	    "php": ">=5.5"
+    },
+    "autoload": {
+        "psr-4": {
+            "Flatphp\\Sanitization\\": ""
+        }
+    }
+}
