@@ -10,42 +10,35 @@ composer require flatphp/sanitization
 ```php
 use \Flatphp\sanitization\sanitizer;
 
-// one
+// sanitize one
 $value = Sanitizer::sanitizeOne(' hello ', 'trim|upper');
 
-// data
+
+// sanitize all
 $data = [
     'v1' => '10.0',
-    'v2' => ['a', 'b', 'c']
+    'v2' => ['a', 'b', 'c'],
+    'v3' => ' hello '
 ];
 $data = Sanitizer::sanitize($data, array(
     'v1' => 'int',
-    'v2' => 'string:,|upper'
+    'v2' => 'string:,|upper',
+    'v3' => function($value){
+        return strtoupper(trim($value));
+    }
 ));
 
-// simple
+
+// just use single
 $value = Sanitizer::toArray('1,2,3', ',');
 ```
 
 
 
-# How to custom your own validate method 加入定制自己的验证方法
+# Custom your own validate method 加入定制自己的验证方法
+* Use anonymous function like example
 * Just extends sanitizer class and add your own method (继承)
 * Or Just write global function (写全局函数)
-*notes:*
-method|function should be like toXxx($value) or toXxx($value, $params), example:   
-方法或函数格式必须是这样的，参考以下：
-```php
-function toTest($value)
-{
-    return $value . ' test';
-}
-
-function toHello($value, $param)
-{
-    return $value .' '. $param;
-}
-```
 
 # Methods 已有的方法和规则
 | method | rule | note |

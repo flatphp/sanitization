@@ -32,6 +32,9 @@ class Sanitizer
      */
     public static function sanitizeOne($value, $rule)
     {
+        if (is_callable($rule)) {
+            return $rule($value);
+        }
         $rule = explode('|', $rule);
         foreach ($rule as $method) {
             if (strpos($method, ':')) {
@@ -45,11 +48,11 @@ class Sanitizer
             $self_method = 'to'. ucfirst($method);
             if (method_exists(get_called_class(), $self_method)) {
                 $value = static::$self_method($value, $param);
-            } elseif (function_exists($self_method)) {
+            } elseif (function_exists($method)) {
                 if (null === $param) {
-                    $value = $self_method($value);
+                    $value = $method($value);
                 } else {
-                    $value = $self_method($value, $param);
+                    $value = $method($value, $param);
                 }
             }
         }
